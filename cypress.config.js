@@ -21,6 +21,8 @@ async function setupNodeEvents(on, config) {
 }
 
 module.exports = defineConfig({
+  viewportWidth: 2048,
+  viewportHeight: 1152,
   projectId: 'moa34p',
   e2e: {
     setupNodeEvents,

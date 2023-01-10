@@ -23,5 +23,8 @@
     "@shelex/cypress-allure-plugin": "^2.34.0",
     "cypress": "^12.2.0",
     "esbuild": "^0.16.4"
+  },
+  "dependencies": {
+    "chai": "^4.3.7"
   }
 }

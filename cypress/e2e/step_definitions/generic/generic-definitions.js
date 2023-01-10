@@ -1,6 +1,6 @@
-import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-import GenericActions from './generic/actions/generic-actions';
-import { paths } from '../../config/urlpaths.json';
+import { Given, When, Then, } from "@badeball/cypress-cucumber-preprocessor";
+import GenericActions from '../generic/actions/generic-actions';
+import { paths } from 'cypress/config/urlpaths.json';
 
 
 Given(/^I am on "([^"]*)"$/, function (url) {
@@ -12,6 +12,11 @@ Given(/^I navigate to the "([^"]*)" page$/, function (path) {
   cy.visit(paths[path]);
 });
 
+Given(/^I navigate to the "(\/.*)" page of (flatrate\.com|gardensavvy\.com)$/, (path, url) => {
+  cy.visit(`https://${url}${path}`);
+  cy.wait(3000);
+});
+
 When(/^I wait for "([^"]*)" second(?:s)$/, function (seconds) {
   cy.wait(seconds * 1000);
 });
@@ -20,11 +25,11 @@ Then(/^I wait for the "([^"]*)" from the "([^"]*)" to be visible$/, function (el
   GenericActions.validateThatElementIsDisplayed(element, page);
 });
 
-When(/^I click on the "([^"]*)" from the "([^"]*)"$/, function (element, page) {
+When(/^I click "([^"]*)" on "([^"]*)"$/, function (element, page) {
   GenericActions.clickOnElement(element, page);
 });
 
-When(/^I type "([^"]*)" inside the "([^"]*)" from the "([^"]*)"$/, function (text, element, page) {
+When(/^I type "([^"]*)" in the "([^"]*)" field on "([^"]*)"$/, function (text, element, page) {
   GenericActions.fillInputField(text, element, page);
 });
 

@@ -5,10 +5,11 @@ class Hooks {
     element = Utils.formatElementName(element);
 
     switch (page) {
-      case 'Home Page':
+      case 'Flatrate - HomePage':
         return {
-          home_title: "[data-cy='home-title']",
-          home_subtitle: "[data-cy='home-page-content']",
+          from: "#t-from",
+          to: "#t-to",
+          next: ".current > .input-row > .small > #next-btn",
         }[element];
 
       default:

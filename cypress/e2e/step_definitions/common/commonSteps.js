@@ -1,4 +1,5 @@
 import { commonMethods } from './commonMethods';
+import { Given, When, Then, } from "@badeball/cypress-cucumber-preprocessor";
 
 Then(/^I check page "([^"]*)" loaded$/, (expectedURLSnippet) => {
   commonMethods.validateUrl(expectedURLSnippet);
