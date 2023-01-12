@@ -44,6 +44,7 @@ class GenericActions {
     if (!selector) {
       throw new Error('Element name does not exist in hooks.js under any page');
     }
+    cy.get(selector).should('be.visible');
     cy.get(selector, { force: true }).type(inputValue);
   }
 

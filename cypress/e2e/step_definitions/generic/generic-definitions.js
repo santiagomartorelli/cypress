@@ -13,7 +13,16 @@ Given(/^I navigate to the "([^"]*)" page$/, function (path) {
 });
 
 Given(/^I navigate to the "(\/.*)" page of (flatrate\.com|gardensavvy\.com)$/, (path, url) => {
-  cy.visit(`https://${url}${path}`);
+  switch (url) {
+    case 'flatrate.com':
+      cy.visit(`https://${url}/v16${path}`);
+      break;
+    case 'gardensavvy.com':
+      cy.visit(`https://${url}${path}`);
+      break;
+    default:
+      throw new Error(`Invalid URL: ${url}`);
+  }
   cy.wait(3000);
 });
 
