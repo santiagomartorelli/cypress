@@ -1,5 +1,5 @@
 Feature: Homepage
-    As a user, I want to be able to navigate to the homepage submit the form as a
+    The ability for users to navigate to the homepage, fill out and submit a form on the Flatrate website
 
     Scenario: View homepage
         Given I navigate to the "/" page of flatrate.com
@@ -7,7 +7,7 @@ Feature: Homepage
         And I type "456 test street" in the "to" field on "Flatrate - HomePage"
         And I click "next" on "Flatrate - HomePage"
         And I set the date
-        Then I select the 'Studio Apt' option from the homesize dropdown
+        And I select the 'Studio Apt' option from the homesize dropdown
         And I click "next" on "Flatrate - HomePage"
         And I type "Lumina Test" in the "name" field on "Flatrate - HomePage"
         And I type "garbage@lumina.nyc" in the "email" field on "Flatrate - HomePage"
