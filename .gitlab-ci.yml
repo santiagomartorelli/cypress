@@ -1,10 +1,32 @@
-stages:          # List of stages for jobs, and their order of execution
-  - test
+# to cache both npm modules and Cypress binary we use environment variables
+# to point at the folders we can list as paths in "cache" job settings
+variables:
+  npm_config_cache: "/builds/santiago105/lumina-testing/.npm"
+  CYPRESS_CACHE_FOLDER: "/builds/santiago105/lumina-testing/cache/Cypress"
 
+# cache using branch name
+# https://gitlab.com/help/ci/caching/index.md
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - .npm
+    - cache/Cypress
 
-test:       # This job runs in the build stage, which runs first.
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+test:
+  image: cypress/base:latest
   stage: test
   script:
     - npm ci
-    - npm run cypress:execution
+    # print CI environment variables for reference
+    - $(npm bin)/print-env CI
+    # make sure Cypress can run
+    - npm run cy:verify
+    # start the server in the background
+    - npm run start &
+    # run Cypress test in load balancing mode, pass id to tie jobs together
+    - npm run e2e:record
+  artifacts:
+    paths:
+      - cypress/videos
+      - cypress/screenshots
+    expire_in: 1 day
