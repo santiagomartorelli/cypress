@@ -9,7 +9,6 @@ variables:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - .npm
     - cache/Cypress
 
 test:
@@ -19,7 +18,7 @@ test:
     - npm bin
     - npm ci
     # print CI environment variables for reference
-    - $(npm bin)/print-env CI
+    - /builds/santiago105/lumina-testing/node_modules/.bin/print-env CI
     # make sure Cypress can run
     - npm run cy:verify
     # start the server in the background
