@@ -15,10 +15,8 @@ test:
   image: cypress/base:latest
   stage: test
   script:
-    - npm install
+    - npm ci
     - ls /builds/santiago105/lumina-testing/node_modules/.bin
-    # print CI environment variables for reference
-    - /builds/santiago105/lumina-testing/node_modules/.bin/print-env CI
     # make sure Cypress can run
     - npm run cy:verify
     # start the server in the background
