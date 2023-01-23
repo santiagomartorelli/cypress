@@ -3,6 +3,5 @@ Feature: Homepage
     so that I can learn more about the website and its offerings.
 
     Scenario: View homepage
-        Given I am on the homepage
-        When I view the page
+        Given I navigate to the "/" page of gardensavvy.com
         Then I should see the correct title
