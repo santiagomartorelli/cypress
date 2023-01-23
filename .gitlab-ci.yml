@@ -15,7 +15,7 @@ test:
   image: cypress/base:latest
   stage: test
   script:
-    - npm ci
+    - npm install
     - ls /builds/santiago105/lumina-testing/node_modules/.bin
     # print CI environment variables for reference
     - /builds/santiago105/lumina-testing/node_modules/.bin/print-env CI
