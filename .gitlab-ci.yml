@@ -4,6 +4,8 @@ variables:
   npm_config_cache: "/builds/santiago105/lumina-testing/.npm"
   CYPRESS_CACHE_FOLDER: "/builds/santiago105/lumina-testing/cache/Cypress"
 
+  npm bin
+
 # cache using branch name
 # https://gitlab.com/help/ci/caching/index.md
 cache:
