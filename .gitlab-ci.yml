@@ -26,6 +26,9 @@ install:
 
   script:
     - npm ci
+    # create necessary folders if they don't exist
+    - if [ ! -d "$npm_config_cache" ]; then mkdir "$npm_config_cache"; fi
+    - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
     # check Cypress binary path and cached versions
     # useful to make sure we are not carrying around old versions
     - npx cypress cache path
