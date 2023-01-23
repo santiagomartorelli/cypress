@@ -16,9 +16,6 @@ test:
   stage: test
   script:
     - npm ci
-    - ls /builds/santiago105/lumina-testing/node_modules/.bin
-    # make sure Cypress can run
-    - npm run cy:verify
     # start the server in the background
     - npm run start &
     # run Cypress test in load balancing mode, pass id to tie jobs together
