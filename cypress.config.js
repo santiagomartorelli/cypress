@@ -21,7 +21,7 @@ async function setupNodeEvents(on, config) {
   allureWriter(on, config);
 
   // This code will send a notification to your Slack channel when a test passes or fails.
-  on('test:after:run', (test) => {
+  on('after:run', (test) => {
     if (test.state === 'failed') {
       slack.send({
         text: `Test ${test.title} failed`,

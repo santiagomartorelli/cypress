@@ -8,6 +8,7 @@ stages:
 variables:
   npm_config_cache: "/builds/santiago105/lumina-testing/.npm"
   CYPRESS_CACHE_FOLDER: "/builds/santiago105/lumina-testing/cache/Cypress"
+  SLACK_WEBHOOK: "https://hooks.slack.com/services/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"
 
 # cache using branch name
 # https://gitlab.com/help/ci/caching/index.md
@@ -22,7 +23,9 @@ cache:
 install:
   image: cypress/base:latest
   stage: build
- 
+
+  before_script:
+  - apt-get update && apt-get install -y jq
 
   script:
     - npm ci
@@ -38,7 +41,7 @@ install:
     - npm run cy:info
 
 # all jobs that actually run tests can use the same definition
-.job_template:
+run_tests:
   image: cypress/base:latest
   stage: test
   script:
@@ -51,8 +54,14 @@ install:
     - npm run start &
     # run Cypress test in load balancing mode, pass id to tie jobs together
     - npm run e2e:record
+  after_script:
+  - npm run allure:clear
+  - npm run allure:generate
+  - npm run allure:open
+  - npm run allure:history
   artifacts:
     paths:
+      - allure-report
       - cypress/videos
       - cypress/screenshots
     expire_in: 1 day
