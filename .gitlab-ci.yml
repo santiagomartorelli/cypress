@@ -59,6 +59,7 @@ run_tests:
   - npm run allure:generate
   - npm run allure:open
   - npm run allure:history
+  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready!\"}' SLACK_WEBHOOK"
   artifacts:
     paths:
       - allure-report
