@@ -59,7 +59,6 @@ run_tests:
   - npm run allure:generate
   - npm run allure:open
   - npm run allure:history
-  - curl -X POST -H 'Content-type: application/json' --data @payload.json $SLACK_WEBHOOK 
   artifacts:
     paths:
       - allure-report
