@@ -55,11 +55,11 @@ run_tests:
     # run Cypress test in load balancing mode, pass id to tie jobs together
     - npm run e2e:record
   after_script:
-    - npm run allure:clear
-    - npm run allure:generate
-    - npm run allure:open
-    - npm run allure:history
-    - curl -X POST -H 'Content-type: application/json' --data @payload.json $SLACK_WEBHOOK   
+  - npm run allure:clear
+  - npm run allure:generate
+  - npm run allure:open
+  - npm run allure:history
+  - curl -X POST -H 'Content-type: application/json' --data @payload.json $SLACK_WEBHOOK 
   artifacts:
     paths:
       - allure-report
