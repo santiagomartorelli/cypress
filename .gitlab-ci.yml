@@ -23,7 +23,9 @@ cache:
 install:
   image: cypress/base:latest
   stage: build
- 
+
+  before_script:
+  - apt-get update && apt-get install -y jq
 
   script:
     - npm ci
@@ -57,11 +59,7 @@ run_tests:
     - npm run allure:generate
     - npm run allure:open
     - npm run allure:history
-    - slack.send({
-          text: `Allure report is available, please find the link: ${CI_JOB_URL}/artifacts/browse/allure-report`,
-          channel: '#cypress_test_results',
-          username: 'Cypress',
-        })
+    - curl -X POST -H 'Content-type: application/json' --data @payload.json $SLACK_WEBHOOK   
   artifacts:
     paths:
       - allure-report
