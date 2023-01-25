@@ -47,7 +47,7 @@ run_tests:
   stage: test
   script:
     - npm ci
-    - export JAVA_HOME=$(/usr/libexec/java_home)
+    - export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
     - echo $JAVA_HOME
     - ls $JAVA_HOME/bin
     - java -version
