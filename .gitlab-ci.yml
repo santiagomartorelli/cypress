@@ -32,6 +32,7 @@ install:
     - $(npm bin)/print-env CI
     - npx cypress info
     - npx cypress verify
+    - npm install -g allure-commandline
 
 run_tests:
   image: cypress/base:latest
@@ -46,7 +47,7 @@ run_tests:
     - /usr/libexec/java_home
     - $(npm bin)/print-env CI
     - rm -r allure-results/ allure-report cypress/screenshots || true
-    - npx cypress run --browser chrome
+    - npx cypress run --browser chrome --spec cypress/e2e/features/**/*.feature
     - allure generate mochawesome-report/mochawesome-report.json --output allure-results
     - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   after_script:
