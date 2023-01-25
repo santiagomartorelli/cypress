@@ -1,18 +1,12 @@
-# first, install Cypress, then run all tests (in parallel)
 stages:
   - build
   - test
 
-# to cache both npm modules and Cypress binary we use environment variables
-# to point at the folders we can list as paths in "cache" job settings
 variables:
   npm_config_cache: "/builds/santiago105/lumina-testing/.npm"
   CYPRESS_CACHE_FOLDER: "/builds/santiago105/lumina-testing/cache/Cypress"
   SLACK_WEBHOOK: "https://hooks.slack.com/services/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"
-  JAVA_HOME: $(/usr/libexec/java_home)
 
-# cache using branch name
-# https://gitlab.com/help/ci/caching/index.md
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -20,9 +14,8 @@ cache:
     - cache/Cypress
     - node_modules
 
-# this job installs NPM dependencies and Cypress
 install:
-  image: cypress/base
+  image: cypress/base:6.2.0
   stage: build
 
   script:
@@ -30,18 +23,20 @@ install:
     - if [ ! -d "$npm_config_cache" ]; then mkdir "$npm_config_cache"; fi
     - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
     # check Cypress binary path and cached versions
-    # useful to make sure we are not carrying around old versions
     - apt-get update
     - apt-get install -y default-jdk
     - export JAVA_HOME=$(/usr/libexec/java_home)
     - echo "JAVA_HOME=$JAVA_HOME"
     - npx cypress cache path
+    - npx cypress cache list
+    - $(npm bin)/print-env CI
     - npm run cy:verify
     - npm run cy:info
+    - npx cypress verify
+    - npx cypress run --record --key ${CYPRESS_RECORD_KEY}
 
-# all jobs that actually run tests can use the same definition
 run_tests:
-  image: cypress/base
+  image: cypress/base:6.2.0
   stage: test
   script:
     - apt-get update
@@ -53,12 +48,10 @@ run_tests:
     - echo $JAVA_HOME
     - java -version
     - /usr/libexec/java_home
-    # make sure Cypress can run
-    - npm run cy:verify
+    - $(npm bin)/print-env CI
+    - npx cypress run --config baseUrl=${BASE_URL}
+    - npx allure generate allure-results/
   after_script:
-  - npm run allure:clear || true
-  - npm run allure:generate
-  - npm run allure:history
   - echo "Sending Slack Message with report link"
   - report_link="https://your-gitlab-domain.com$CI_JOB_URL/artifacts/allure-report"
   - echo report_link
