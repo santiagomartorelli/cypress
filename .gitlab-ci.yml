@@ -33,6 +33,7 @@ install:
     - npx cypress info
     - npx cypress verify
     - npm install -g allure-commandline
+    - npm i cypress-mochawesome-reporter
 
 run_tests:
   image: cypress/base:latest
