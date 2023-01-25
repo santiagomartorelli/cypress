@@ -39,8 +39,6 @@ run_tests:
   script:
     - apt-get update
     - apt-get install -y openjdk-11-jdk
-    - apt-get install -y chromium-driver
-    - chromedriver
     - npm ci
     - export JAVA_HOME=$(/usr/libexec/java_home)
     - echo $JAVA_HOME
@@ -48,6 +46,7 @@ run_tests:
     - /usr/libexec/java_home
     - $(npm bin)/print-env CI
     - rm -r allure-results/ allure-report cypress/screenshots || true
+    - npx cypress run --browser chrome
     - allure generate mochawesome-report/mochawesome-report.json --output allure-results
     - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   after_script:
