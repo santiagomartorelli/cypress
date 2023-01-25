@@ -22,7 +22,7 @@ cache:
 
 # this job installs NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/included:9.4.1
   stage: build
 
   script:
@@ -43,7 +43,7 @@ install:
 
 # all jobs that actually run tests can use the same definition
 run_tests:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/included:9.4.1
   stage: test
   script:
     - apt-get update
