@@ -9,6 +9,7 @@ variables:
   npm_config_cache: "/builds/santiago105/lumina-testing/.npm"
   CYPRESS_CACHE_FOLDER: "/builds/santiago105/lumina-testing/cache/Cypress"
   SLACK_WEBHOOK: "https://hooks.slack.com/services/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"
+  JAVA_HOME: $(/usr/libexec/java_home)
 
 # cache using branch name
 # https://gitlab.com/help/ci/caching/index.md
