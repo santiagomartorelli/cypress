@@ -39,7 +39,7 @@ run_tests:
   script:
     - apt-get update
     - apt-get install -y openjdk-11-jdk
-    - apt-get install -y chromium-chromedriver
+    - apt-get install -y chromium-driver
     - chromedriver
     - npm ci
     - export JAVA_HOME=$(/usr/libexec/java_home)
