@@ -52,9 +52,9 @@ run_tests:
     - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   after_script:
   - echo "Sending Slack Message with report link"
-  - report_link="https://your-gitlab-domain.com$CI_JOB_URL/artifacts/allure-report"
+  - report_link="https://gitlab.com$CI_JOB_URL/artifacts/allure-report"
   - echo report_link
-  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: https://your-gitlab-domain.com$CI_JOB_URL/artifacts/allure-report\"}' https://hooks.slack.com/services/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"
+  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: https://gitlab.com$CI_JOB_URL/artifacts/allure-report\"}' https://hooks.slack.com/services/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"
   artifacts:
     paths:
       - allure-report
