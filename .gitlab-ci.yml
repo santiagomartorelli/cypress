@@ -38,7 +38,7 @@ install:
 
 # all jobs that actually run tests can use the same definition
 run_tests:
-  image: cypress/base:latest
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: test
   script:
     - npm ci
