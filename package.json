@@ -12,10 +12,9 @@
     "cy:info": "cypress info",
     "start": "node ./scripts/start.js",
     "posttest": "npm run allure:generate && npm run allure:open",
-    "allure:generate": "allure generate mochawesome-report/mochawesome.json --output allure-results",
-    "ui-regression": "cypress run --browser chrome --spec cypress/e2e/1-getting-started/**.js",
-    "ui-regression-allure": "cypress run --browser chrome --spec cypress/e2e/1-getting-started/**.js --env allure=true",
+    "cypress:execution-allure": "cypress run --browser chrome --env allure=true",
     "allure:clear": "rm -r allure-results/ allure-report cypress/screenshots || true",
+    "allure:generate": "allure generate mochawesome-report/mochawesome-report.json --output allure-results",
     "allure:report": "allure generate allure-results --clean -o allure-report",
     "allure:history": "mv -f allure-report/history allure-results/history && rm -r allure-report || true"
   },
@@ -25,16 +24,17 @@
   "author": "cucumber",
   "license": "ISC",
   "devDependencies": {
-    "@bahmutov/print-env": "1.2.0",
     "@badeball/cypress-cucumber-preprocessor": "^15.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
+    "@bahmutov/print-env": "1.2.0",
     "@shelex/cypress-allure-plugin": "^2.34.0",
     "cypress": "^12.3.0",
+    "cypress-mochawesome-reporter": "^3.2.3",
     "esbuild": "^0.16.4",
-    "slack-notify": "^2.0.6",
-    "cypress-mochawesome-reporter": "^3.2.3"
+    "slack-notify": "^2.0.6"
   },
   "dependencies": {
+    "allure-commandline": "^2.20.1",
     "chai": "^4.3.7",
     "print-env": "^0.1.2"
   }
