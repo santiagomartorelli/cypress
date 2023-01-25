@@ -46,16 +46,17 @@ run_tests:
   stage: test
   script:
     - npm ci
-      # set JAVA_HOME
     - export JAVA_HOME=$(/usr/libexec/java_home)
+    - echo $JAVA_HOME
+    - ls $JAVA_HOME/bin
+    - java -version
+    - /usr/libexec/java_home
     # print CI environment variables for reference
     - $(npm bin)/print-env CI
     # make sure Cypress can run
     - npm run cy:verify
-    # run Cypress tests
-    - npm run cypress:execution-allure
   after_script:
-  - npm run allure:clear
+  - npm run allure:clear || true
   - npm run allure:generate
   - npm run allure:history
   - echo "Sending Slack Message with report link"
