@@ -15,7 +15,7 @@ cache:
     - node_modules
 
 install:
-  image: cypress/base:6.2.0
+  image: cypress/base:latest
   stage: build
 
   script:
