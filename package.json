@@ -12,9 +12,9 @@
     "cy:info": "cypress info",
     "start": "node ./scripts/start.js",
     "cypress:execution-allure": "cypress run --env allure=true",
-    "allure:clear": "del /s /q allure-results allure-report cypress\\screenshots || exit 0",
+    "allure:clear": "rm -r allure-results/ allure-report cypress/screenshots || true",
     "allure:generate": "allure generate mochawesome-report/mochawesome-report.json --output allure-results",
-    "allure:history": "move /y allure-report\\history allure-results\\history && rd /s /q allure-report"
+    "allure:history": "mv -f allure-report/history allure-results/history && rm -r allure-report || true"
   },
   "keywords": [
     "cypress"
