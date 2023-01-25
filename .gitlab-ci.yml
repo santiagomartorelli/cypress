@@ -22,12 +22,11 @@ cache:
 
 # this job installs NPM dependencies and Cypress
 install:
-  image: cypress/included:12.3.0
+  image: cypress/base
   stage: build
 
   script:
     # create necessary folders if they don't exist
-    - npm install
     - if [ ! -d "$npm_config_cache" ]; then mkdir "$npm_config_cache"; fi
     - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
     # check Cypress binary path and cached versions
@@ -44,7 +43,7 @@ install:
 
 # all jobs that actually run tests can use the same definition
 run_tests:
-  image: cypress/included:12.3.0
+  image: cypress/base
   stage: test
   script:
     - apt-get update
