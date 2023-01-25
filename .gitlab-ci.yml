@@ -24,22 +24,7 @@ install:
   image: cypress/base:latest
   stage: build
 
-  before_script:
-  - apt-get update && apt-get install -y sudo
-  - sudo apt-get update
-  - sudo apt-get install -y apt-utils
-  - sudo apt-get install -y jq
-  - lsb_release -a
-
   script:
-    - npm ci
-    - apt-get update && apt-get install -y openjdk-8-jdk
-    #find the correct path of the installed java
-    - update-alternatives --config java
-    # set JAVA_HOME environment variable
-    - export JAVA_HOME="/usr/lib/jvm/jre-1.8.0-openjdk"
-    # verify Java version
-    - java -version
     # create necessary folders if they don't exist
     - if [ ! -d "$npm_config_cache" ]; then mkdir "$npm_config_cache"; fi
     - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
