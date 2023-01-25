@@ -30,8 +30,7 @@ install:
 
   script:
     - npm ci
-    # update yum and install Java
-    - yum update -y && yum install -y java-1.8.0-openjdk-devel
+    - apt-get update && apt-get install -y openjdk-8-jdk
     #find the correct path of the installed java
     - update-alternatives --config java
     # set JAVA_HOME environment variable
