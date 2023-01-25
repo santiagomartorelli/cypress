@@ -43,6 +43,7 @@ run_tests:
   script:
     - npm ci
     # print CI environment variables for reference
+    - export JAVA_HOME=$(/usr/libexec/java_home)
     - $(npm bin)/print-env CI
     # make sure Cypress can run
     - npm run cy:verify
