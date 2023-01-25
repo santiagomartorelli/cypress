@@ -33,7 +33,6 @@ install:
     - npm run cy:verify
     - npm run cy:info
     - npx cypress verify
-    - npx cypress run --record --key ${CYPRESS_RECORD_KEY}
 
 run_tests:
   image: cypress/base:6.2.0
