@@ -25,7 +25,7 @@ install:
   stage: build
 
   before_script:
-  - apt-get update && apt-get install -y jq
+  - apt-get update && apt-get install -y apt-utils jq
   - lsb_release -a
 
   script:
