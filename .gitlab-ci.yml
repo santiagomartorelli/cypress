@@ -21,7 +21,7 @@ cache:
 
 # this job installs NPM dependencies and Cypress
 install:
-  image: cypress/base:latest
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: build
 
   script:
@@ -30,6 +30,10 @@ install:
     - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
     # check Cypress binary path and cached versions
     # useful to make sure we are not carrying around old versions
+    - apt-get update
+    - apt-get install -y default-jdk
+    - export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+    - echo "JAVA_HOME=$JAVA_HOME"
     - npx cypress cache path
     - npx cypress cache list
     - $(npm bin)/print-env CI
@@ -45,10 +49,6 @@ run_tests:
       # set JAVA_HOME
     - export JAVA_HOME=$(/usr/libexec/java_home)
     # print CI environment variables for reference
-    - echo $JAVA_HOME
-    - ls $JAVA_HOME/bin
-    - java -version
-    - /usr/libexec/java_home
     - $(npm bin)/print-env CI
     # make sure Cypress can run
     - npm run cy:verify
