@@ -42,13 +42,12 @@ run_tests:
   stage: test
   script:
     - npm ci
-    # print CI environment variables for reference
+      # set JAVA_HOME
     - export JAVA_HOME=$(/usr/libexec/java_home)
+    # print CI environment variables for reference
     - $(npm bin)/print-env CI
     # make sure Cypress can run
     - npm run cy:verify
-    # start the server in the background
-    - npm run start &
     # run Cypress tests
     - npm run cypress:execution-allure
   after_script:
@@ -57,6 +56,7 @@ run_tests:
   - npm run allure:history
   - echo "Sending Slack Message with report link"
   - report_link="https://your-gitlab-domain.com$CI_JOB_URL/artifacts/allure-report"
+  - echo report_link
   - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: $report_link\"}' https://hooks.slack.com/services/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"
   artifacts:
     paths:
