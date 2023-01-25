@@ -33,7 +33,7 @@ install:
     # useful to make sure we are not carrying around old versions
     - apt-get update
     - apt-get install -y default-jdk
-    - export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+    - export JAVA_HOME=$(/usr/libexec/java_home)
     - echo "JAVA_HOME=$JAVA_HOME"
     - npx cypress cache path
     - npx cypress cache list
@@ -47,9 +47,8 @@ run_tests:
   stage: test
   script:
     - npm ci
-    - export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+    - export JAVA_HOME=$(/usr/libexec/java_home)
     - echo $JAVA_HOME
-    - ls $JAVA_HOME/bin
     - java -version
     - /usr/libexec/java_home
     # print CI environment variables for reference
