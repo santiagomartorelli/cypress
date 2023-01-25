@@ -36,8 +36,6 @@ install:
     - export JAVA_HOME=$(/usr/libexec/java_home)
     - echo "JAVA_HOME=$JAVA_HOME"
     - npx cypress cache path
-    - npx cypress cache list
-    - $(npm bin)/print-env CI
     - npm run cy:verify
     - npm run cy:info
 
@@ -55,8 +53,6 @@ run_tests:
     - echo $JAVA_HOME
     - java -version
     - /usr/libexec/java_home
-    # print CI environment variables for reference
-    - $(npm bin)/print-env CI
     # make sure Cypress can run
     - npm run cy:verify
   after_script:
