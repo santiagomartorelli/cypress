@@ -26,8 +26,10 @@ install:
     # check Cypress binary path and cached versions
     - apt-get update
     - apt-get install -y default-jdk
+    # set JAVA_HOME
     - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
-    - echo JAVA_HOME
+    - echo ${JAVA_HOME}
+    - echo $JAVA_HOME
     - npx cypress cache path
     - npx cypress cache list
     - npx cypress info
@@ -43,6 +45,9 @@ run_tests:
     - npm install -g allure-commandline
     - npm i cypress-mochawesome-reporter
     - rm -r allure-results/ allure-report cypress/screenshots || true
+    # reference JAVA_HOME
+    - echo ${JAVA_HOME}
+    - echo $JAVA_HOME
         # Run cypress tests
     - npx cypress run --reporter cypress-mochawesome-reporter
     - npx allure generate allure-results --clean -o allure-report
