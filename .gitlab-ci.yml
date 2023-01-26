@@ -27,6 +27,7 @@ install:
     - apt-get update
     - apt-get install -y default-jdk
     - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
+    - echo JAVA_HOME
     - npx cypress cache path
     - npx cypress cache list
     - npx cypress info
@@ -48,6 +49,7 @@ run_tests:
   after_script:
   - echo "Sending Slack Message with report link"
   - report_link="$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report"
+  - echo report_link
   - if [ -d "allure-report" ]; then echo "allure-report exists"; else echo "allure-report does not exist"; fi
   - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: $report_link\"}' https://hooks.slack.com/services/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"
   - mv -f allure-report/history allure-results/history && rm -r allure-report || true
