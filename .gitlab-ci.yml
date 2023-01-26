@@ -46,6 +46,9 @@ run_tests:
   stage: test
   script:
     - npm ci
+    - npm install -g allure-commandline
+    - npm i cypress-mochawesome-reporter
+    - rm -r allure-results/ allure-report cypress/screenshots || true
       # set JAVA_HOME
     - export JAVA_HOME=$(/usr/libexec/java_home)
     # print CI environment variables for reference
