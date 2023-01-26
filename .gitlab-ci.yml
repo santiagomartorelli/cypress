@@ -15,7 +15,7 @@ cache:
     - node_modules
 
 install:
-  image: cypress/base:latest
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: build
 
   script:
@@ -36,7 +36,7 @@ install:
     - npm i cypress-mochawesome-reporter
 
 run_tests:
-  image: cypress/base:latest
+  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: test
   script:
     - apt-get update
@@ -58,7 +58,7 @@ run_tests:
   - report_link="$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report"
   - echo $report_link
   - if [ -d "allure-report" ]; then echo "allure-report exists"; else echo "allure-report does not exist"; fi
-  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: ${report_link}\"}' https://hooks.slack.com/services/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"
+  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: $report_link\"}' https://hooks.slack.com/services/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"
   - echo $?
   - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   artifacts:
