@@ -19,8 +19,9 @@ install:
   stage: build
 
   script:
-    # create necessary folders if they don't exist
-    - if [ ! -d "$npm_config_cache" ]; then mkdir "$npm_config_cache"; fi
+    # check if cache has been restored
+    - if [ ! -d "$npm_config_cache" ]; then echo "Cache not restored, creating necessary directories"; mkdir "$npm_config_cache"; fi
+    - mkdir -p $(dirname "$CYPRESS_CACHE_FOLDER")
     - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
     # check Cypress binary path and cached versions
     - apt-get update
