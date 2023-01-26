@@ -49,7 +49,7 @@ run_tests:
     - $(npm bin)/print-env CI
     - rm -r allure-results/ allure-report cypress/screenshots || true
         # Run cypress tests
-    - npx cypress run --reporter mochawesome  --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true
+    - npx cypress run
     - npx allure generate allure-results --clean -o allure-report
   after_script:
   - echo "Sending Slack Message with report link"
