@@ -10,9 +10,9 @@ variables:
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - .npm
-    - cache/Cypress
-    - node_modules
+    - "/builds/santiago105/lumina-testing/.npm"
+    - "/builds/santiago105/lumina-testing/cache/Cypress"
+    - "/builds/santiago105/lumina-testing/node_modules"
 
 install:
   image: cypress/browsers:node16.16.0-chrome107-ff107-edge
