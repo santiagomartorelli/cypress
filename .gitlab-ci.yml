@@ -26,6 +26,7 @@ install:
     # check Cypress binary path and cached versions
     - apt-get update
     - apt-get install -y default-jdk
+    - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
     - npx cypress cache path
     - npx cypress cache list
     - npx cypress info
