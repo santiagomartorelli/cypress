@@ -1,12 +1,17 @@
+# first, install Cypress, then run all tests (in parallel)
 stages:
   - build
   - test
 
+# to cache both npm modules and Cypress binary we use environment variables
+# to point at the folders we can list as paths in "cache" job settings
 variables:
   npm_config_cache: "/builds/santiago105/lumina-testing/.npm"
   CYPRESS_CACHE_FOLDER: "/builds/santiago105/lumina-testing/cache/Cypress"
   SLACK_WEBHOOK: "https://hooks.slack.com/services/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"
 
+# cache using branch name
+# https://gitlab.com/help/ci/caching/index.md
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
@@ -14,6 +19,7 @@ cache:
     - cache/Cypress
     - node_modules
 
+# this job installs NPM dependencies and Cypress
 install:
   image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: build
@@ -23,33 +29,38 @@ install:
     - if [ ! -d "$npm_config_cache" ]; then mkdir "$npm_config_cache"; fi
     - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
     # check Cypress binary path and cached versions
+    # useful to make sure we are not carrying around old versions
     - apt-get update
     - apt-get install -y default-jdk
+    - export JAVA_HOME=$(readlink -f /usr/bin/java | sed "s:bin/java::")
+    - echo "JAVA_HOME=$JAVA_HOME"
     - npx cypress cache path
     - npx cypress cache list
     - $(npm bin)/print-env CI
-    - npx cypress info
-    - npx cypress verify
-    - npm install -g allure-commandline
-    - npm i cypress-mochawesome-reporter
+    - npm run cy:verify
+    - npm run cy:info
 
+# all jobs that actually run tests can use the same definition
 run_tests:
   image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: test
   script:
     - npm ci
-    - npm install -g allure-commandline
-    - npm i cypress-mochawesome-reporter
-    - rm -r allure-results/ allure-report cypress/screenshots || true
-        # Run cypress tests
-    - npx cypress run --spec cypress/e2e/features/**/*.feature --reporter cypress-mochawesome-reporter
-    - npx allure generate allure-results --clean -o allure-report
+      # set JAVA_HOME
+    - export JAVA_HOME=$(/usr/libexec/java_home)
+    # print CI environment variables for reference
+    - $(npm bin)/print-env CI
+    # make sure Cypress can run
+    - npm run cy:verify
+    # run Cypress tests
+    - npm run cypress:execution-allure
   after_script:
+  - npm run allure:clear
+  - npm run allure:generate
+  - npm run allure:history
   - echo "Sending Slack Message with report link"
   - report_link="$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report"
-  - if [ -d "allure-report" ]; then echo "allure-report exists"; else echo "allure-report does not exist"; fi
   - "curl -X POST -H 'Content-type: application/json' --data \"{\"text\":\"Allure report is ready! Check it out: $report_link\"}\" https://hooks.slack.com/services/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"
-  - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   artifacts:
     paths:
       - allure-report
