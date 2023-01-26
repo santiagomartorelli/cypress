@@ -61,6 +61,7 @@ run_tests:
   artifacts:
     paths:
       - allure-report
+      - mochawesome-report
       - allure-results/history
       - cypress/videos
       - cypress/screenshots
