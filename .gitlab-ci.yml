@@ -48,14 +48,15 @@ run_tests:
     - /usr/libexec/java_home
     - $(npm bin)/print-env CI
     - rm -r allure-results/ allure-report cypress/screenshots || true
-    - npx cypress run --spec cypress/e2e/features/**/*.feature --reporter cypress-mochawesome-reporter
+        # Run cypress tests
+    - npx cypress run --reporter mochawesome  --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true
     - npx allure generate allure-results --clean -o allure-report
   after_script:
   - echo "Sending Slack Message with report link"
-  - report_link="https://gitlab.com$CI_PROJECT_URL/jobs/$CI_JOB_ID/artifacts/allure-report"
+  - report_link="https://gitlab.com$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report"
   - echo $report_link
   - if [ -d "allure-report" ]; then echo "allure-report exists"; else echo "allure-report does not exist"; fi
-  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: https://gitlab.com$CI_PROJECT_URL/jobs/$CI_JOB_ID/artifacts/allure-report\"}' https://hooks.slack.com/services/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"
+  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: https://gitlab.com$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report\"}' https://hooks.slack.com/services/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"
   - echo $?
   - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   artifacts:
