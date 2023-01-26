@@ -49,7 +49,7 @@ run_tests:
     - $(npm bin)/print-env CI
     - rm -r allure-results/ allure-report cypress/screenshots || true
     - npx cypress run --browser chrome --spec cypress/e2e/features/**/*.feature --reporter cypress-mochawesome-reporter
-    - npx allure generate allure-results --clean -o allure-report && allure open allure-report
+    - npx allure generate allure-results --clean -o allure-report
     - ls -al allure-results/
   after_script:
   - echo "Sending Slack Message with report link"
