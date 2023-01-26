@@ -55,9 +55,7 @@ run_tests:
     # run Cypress tests
     - npm run cypress:execution-allure
   after_script:
-  - npm run allure:clear
   - npm run allure:generate
-  - npm run allure:history
   - echo "Sending Slack Message with report link"
   - report_link="$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report"
   - "curl -X POST -H 'Content-type: application/json' --data \"{\"text\":\"Allure report is ready! Check it out: $report_link\"}\" https://hooks.slack.com/services/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"
