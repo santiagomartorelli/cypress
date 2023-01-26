@@ -39,16 +39,9 @@ run_tests:
   image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: test
   script:
-    - apt-get update
-    - apt-get install -y openjdk-11-jdk
     - npm ci
     - npm install -g allure-commandline
     - npm i cypress-mochawesome-reporter
-    - export JAVA_HOME=$(/usr/libexec/java_home)
-    - echo $JAVA_HOME
-    - java -version
-    - /usr/libexec/java_home
-    - $(npm bin)/print-env CI
     - rm -r allure-results/ allure-report cypress/screenshots || true
         # Run cypress tests
     - npx cypress run --spec cypress/e2e/features/**/*.feature --reporter cypress-mochawesome-reporter
@@ -56,10 +49,8 @@ run_tests:
   after_script:
   - echo "Sending Slack Message with report link"
   - report_link="$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report"
-  - echo $report_link
   - if [ -d "allure-report" ]; then echo "allure-report exists"; else echo "allure-report does not exist"; fi
-  - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: $report_link\"}' https://hooks.slack.com/services/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"
-  - echo $?
+  - "curl -X POST -H 'Content-type: application/json' --data \"{\"text\":\"Allure report is ready! Check it out: $report_link\"}\" https://hooks.slack.com/services/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"
   - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   artifacts:
     paths:
