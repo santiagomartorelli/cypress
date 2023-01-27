@@ -10,15 +10,13 @@ Integrated with:
 
 - [x] https://github.com/badeball/cypress-cucumber-preprocessor
 - [x] https://github.com/bahmutov/cypress-esbuild-preprocessor
-- [x] https://github.com/Shelex/cypress-allure-plugin
+- [x] https://www.npmjs.com/package/mochawesome
 
 (+ esbuild: https://github.com/badeball/cypress-cucumber-preprocessor/tree/master/examples)
 
 - ## 💻 Pre-requisites
 
 1. Node JS
-2. Java 8 for Allure Reporter
-npm install -g allure-commandline (this installs the Allure command line interface (CLI) on your system to be able to run the allure:report script)
 
 ## 🚀 Install the project
 
@@ -26,9 +24,6 @@ Install project dependencies with: npm i
 
 ## Run the tests:
 
-1. Standard Execution: npm run cypress:execution (Headless mode)
+1. Standard Execution: npm run cypress:execution (Headless mode) - This will generate the Mochawesome report.
 2. npx cypress run --record --key 79a2f67d-4a82-41f1-9e71-18da72899e8b (to Run and save report in cypress cloud)
-3. Allure Report: 
-   1. npm run cypress:execution-allure
-   2. npm run allure:report
-   3. allure open
+

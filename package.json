@@ -7,14 +7,9 @@
     "cypress:runner": "cypress open --e2e --browser chrome",
     "print-env": "print-env",
     "cypress:execution": "cypress run",
-    "e2e:record": "cypress run --record --reporter-options mochawesomeFile=mochawesome-report.json",
     "cy:verify": "cypress verify",
     "cy:info": "cypress info",
-    "start": "node ./scripts/start.js",
-    "cypress:execution-allure": "cypress run --env allure=true",
-    "allure:clear": "rm -r allure-results/ allure-report cypress/screenshots || true",
-    "allure:generate": "allure generate mochawesome-report/mochawesome-report.json --output allure-results",
-    "allure:history": "mv -f allure-report/history allure-results/history && rm -r allure-report || true"
+    "start": "node ./scripts/start.js"
   },
   "keywords": [
     "cypress"
@@ -25,14 +20,12 @@
     "@badeball/cypress-cucumber-preprocessor": "^15.0.0",
     "@bahmutov/cypress-esbuild-preprocessor": "^2.1.5",
     "@bahmutov/print-env": "1.2.0",
-    "@shelex/cypress-allure-plugin": "^2.34.0",
     "cypress": "^12.3.0",
     "cypress-mochawesome-reporter": "^3.2.3",
     "esbuild": "^0.16.4",
     "slack-notify": "^2.0.6"
   },
   "dependencies": {
-    "allure-commandline": "^2.20.1",
     "chai": "^4.3.7",
     "print-env": "^0.1.2"
   }
