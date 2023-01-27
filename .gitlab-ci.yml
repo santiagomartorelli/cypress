@@ -41,6 +41,7 @@ run_tests:
     - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
     - npm i cypress-mochawesome-reporter
     - npx cypress run
+    - test -f mochawesome-report/index.html && echo "index.html found" || echo "index.html not found"
   after_script:
    - report_link="$CI_PROJECT_URL/-/jobs/${CI_PROJECT_ID}/artifacts/browse/mochawesome-report"
    - echo ${report_link}
@@ -49,4 +50,6 @@ run_tests:
   artifacts:
     paths:
        - cypress/mochawesome-report
+       - mochawesome-report/*
+       - mochawesome-report/index.html
     expire_in: 1 day
