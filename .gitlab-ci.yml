@@ -28,7 +28,6 @@ install:
     - apt-get install -y default-jdk
     # set JAVA_HOME
     - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
-    - echo $JAVA_HOME
     - npx cypress cache path
     - npx cypress cache list
     - npx cypress info
@@ -46,17 +45,14 @@ run_tests:
     # set JAVA_HOME
     - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
     - echo $JAVA_HOME
-    - npm install -g slack-cli
     - npm install -g allure-commandline
     - npm i cypress-mochawesome-reporter
     - rm -r allure-results/ allure-report cypress/screenshots || true
-    # reference JAVA_HOME
-    - echo ${JAVA_HOME}
-        # Run cypress tests
+    # Run cypress tests
     - npx cypress run --reporter cypress-mochawesome-reporter
     - npx allure generate allure-results --clean -o allure-report
   after_script:
-   - report_link="$CI_PROJECT_URL/jobs/${CI_PROJECT_ID}/artifacts/allure-report"
+   - report_link="$CI_PROJECT_URL/-/jobs/${CI_PROJECT_ID}/artifacts/browse/allure-report"
    - echo ${report_link}
    - if [ -d "allure-report" ]; then echo "allure-report exists"; else echo "allure-report does not exist"; fi
    - echo "Sending Slack Message with report link"
