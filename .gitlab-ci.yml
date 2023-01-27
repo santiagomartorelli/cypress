@@ -19,14 +19,11 @@ install:
   stage: build
 
   script:
-    # check if cache has been restored
     - if [ ! -d "$npm_config_cache" ]; then echo "Cache not restored, creating necessary directories"; mkdir "$npm_config_cache"; fi
     - mkdir -p $(dirname "$CYPRESS_CACHE_FOLDER")
     - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
-    # check Cypress binary path and cached versions
     - apt-get update
     - apt-get install -y default-jdk
-    # set JAVA_HOME
     - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
     - npx cypress cache path
     - npx cypress cache list
@@ -41,9 +38,7 @@ run_tests:
     - npm ci
     - apt-get update
     - apt-get install -y default-jdk
-    # set JAVA_HOME
     - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
-    - echo $JAVA_HOME
     - npm i cypress-mochawesome-reporter
     - npx cypress run
   after_script:
@@ -53,5 +48,5 @@ run_tests:
    - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Report is ready! Check it out: $report_link\"}' https://hooks.slack.com/services/T5J570KKL/B04LKMNPQL8/"
   artifacts:
     paths:
-       - mochawesome-report
+       - cypress/mochawesome-report
     expire_in: 1 day
