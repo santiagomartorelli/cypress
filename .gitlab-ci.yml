@@ -61,7 +61,7 @@ run_tests:
    - if [ -d "allure-report" ]; then echo "allure-report exists"; else echo "allure-report does not exist"; fi
    - echo "Sending Slack Message with report link"
    - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Allure report is ready! Check it out: $report_link\"}' https://hooks.slack.com/services/T5J570KKL/B04LKMNPQL8/"
-
+   - mv -f allure-report/history allure-results/history && rm -r allure-report || true
   artifacts:
     paths:
       - allure-report
@@ -70,4 +70,3 @@ run_tests:
       - cypress/videos
       - cypress/screenshots
     expire_in: 1 day
-     - mv -f allure-report/history allure-results/history && rm -r allure-report || true
