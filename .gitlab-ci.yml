@@ -55,7 +55,7 @@ pages:
     - mv mochawesome-report public
   when: always
   only:
-    - master
+    - main
   artifacts:
     expire_in: 30 days
     when: always
