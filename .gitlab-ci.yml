@@ -1,55 +1,65 @@
+# first, install Cypress, then run all tests
 stages:
   - build
   - test
+  - pages
 
+# to cache both npm modules and Cypress binary we use environment variables
+# to point at the folders we can list as paths in "cache" job settings
 variables:
-  npm_config_cache: "/builds/santiago105/lumina-testing/.npm"
-  CYPRESS_CACHE_FOLDER: "/builds/santiago105/lumina-testing/cache/Cypress"
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
   SLACK_WEBHOOK: "https://hooks.slack.com/services/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"
 
 cache:
   key: ${CI_COMMIT_REF_SLUG}
   paths:
-    - "/builds/santiago105/lumina-testing/.npm"
-    - "/builds/santiago105/lumina-testing/cache/Cypress"
-    - "/builds/santiago105/lumina-testing/node_modules"
+    - .npm
+    - cache/Cypress
+    - node_modules
 
+# this job installs NPM dependencies and Cypress
 install:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/base:10
   stage: build
-
-  script:
-    - if [ ! -d "$npm_config_cache" ]; then echo "Cache not restored, creating necessary directories"; mkdir "$npm_config_cache"; fi
-    - mkdir -p $(dirname "$CYPRESS_CACHE_FOLDER")
-    - if [ ! -d "$CYPRESS_CACHE_FOLDER" ]; then mkdir "$CYPRESS_CACHE_FOLDER"; fi
-    - apt-get update
-    - apt-get install -y default-jdk
-    - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
-    - npx cypress cache path
-    - npx cypress cache list
-    - npx cypress info
-    - npx cypress verify
-    - npm i cypress-mochawesome-reporter
-
-run_tests:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
-  stage: test
   script:
     - npm ci
-    - apt-get update
-    - apt-get install -y default-jdk
-    - export JAVA_HOME=$(update-java-alternatives -l | awk '{print $3}')
-    - npm i cypress-mochawesome-reporter
-    - npx cypress run
-    - test -f mochawesome-report/index.html && echo "index.html found" || echo "index.html not found"
-  after_script:
-   - report_link="$CI_PROJECT_URL/-/jobs/${CI_PROJECT_ID}/artifacts/browse/mochawesome-report"
-   - echo ${report_link}
-   - echo "Sending Slack Message with report link"
-   - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Report is ready! Check it out: $report_link\"}' https://hooks.slack.com/services/T5J570KKL/B04LKMNPQL8/"
+    # check Cypress binary path and cached versions
+    # useful to make sure we are not carrying around old versions
+    - npx cypress cache path
+    - npx cypress cache list
+    - npm run cy:verify
+    - npm run cy:info
+
+test:
+  image: cypress/base:10
+  stage: test
+  script:
+    # Run cypress tests
+    - npx cypress run --reporter mochawesome  --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true
   artifacts:
+    expire_in: 30 days
+    when: always
     paths:
-       - cypress/mochawesome-report
-       - mochawesome-report/*
-       - mochawesome-report/index.html
-    expire_in: 1 day
+      - mochawesome-report
+      - cypress/screenshots
+
+pages:
+  image: cypress/base:10
+  stage: pages
+  script:
+    # Generate Mochawesome report
+    - npx mochawesome-merge "mochawesome-report/*.json" > mochawesome.json
+    - npx marge mochawesome.json
+    # Rename mochawesome-report folder to public
+    - mv mochawesome-report public
+  when: always
+  only:
+    - master
+  artifacts:
+    expire_in: 30 days
+    when: always
+    paths:
+      - public
+      - mochawesome-report
+      - cypress/screenshots
