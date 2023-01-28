@@ -45,12 +45,12 @@ test:
       - cypress/screenshots
 
 pages:
-  image: cypress/browsers:node16.16.0-chrome107-ff107-edge
+  image: cypress/base:10
   stage: pages
   script:
-    # Generate Mochawesome report
-    - npx mochawesome-merge "mochawesome-report/*.json" > mochawesome.json
-    - npx mochawesome-report-generator mochawesome.json
+    # Merge Json files and generate the report
+    - npx mochawesome-merge ./mochawesome-report/*.json -o merged.json
+    - npx mochawesome-report-generator merged.json
     # Rename mochawesome-report folder to public
     - mv mochawesome-report public
   when: always
