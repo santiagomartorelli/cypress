@@ -56,6 +56,8 @@ pages:
     - mv mochawesome-report public
     # move screenshots folder to public
     - mv cypress/screenshots public
+    # Send Slack message with report URL
+    - echo "Cypress test results are available at https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/merged.html" | slacktee -w -a warning -u Cypress -c general -n     "Cypress Test Results" -s "$SLACK_WEBHOOK"
   when: always
   only:
     - main
