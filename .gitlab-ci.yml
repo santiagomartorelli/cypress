@@ -58,7 +58,7 @@ pages:
     - mv cypress/screenshots public
     - report_link="https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/merged.html"
     - echo "${report_link}"
-    - 'curl -X POST -H "Content-type: application/json" --data "{\text\:\Report is ready! Check it out: ${report_link}\}" https://hooks.slack.com/services/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'
+    - 'curl -X POST -H "Content-type: application/json" --data "{\"text\":\"Report is ready! Check it out: \"\"${report_link}\"}" https://hooks.slack.com/services/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'
   when: always
   only:
     - main
