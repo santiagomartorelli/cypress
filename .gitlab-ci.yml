@@ -49,9 +49,9 @@ pages:
   stage: pages
   script:
     # Merge Json files
-    - npx mochawesome-merge mochawesome-report/*.json -o merged.json
+    - npx mochawesome-merge "mochawesome-report/*.json" > mochawesome.json
     # Generate the report using the merged JSON files as input.
-    - npx mochawesome-report-generator merged.json
+    - npx mochawesome-report-generator mochawesome.json
     # move mochawesome-report folder to public
     - mv mochawesome-report public
     # move screenshots folder to public
