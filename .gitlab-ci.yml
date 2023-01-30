@@ -57,7 +57,7 @@ pages:
     # move screenshots folder to public
     - mv cypress/screenshots public
     - echo "Cypress test results are available at https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/merged.html"
-    - "curl -X POST -H 'Content-type: application/json' --data \"{\"text\":\"Report is ready! Check it out: https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/merged.html\"}\" https://hooks.slack.com/services/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"
+    - "curl -X POST -H 'Content-type: application/json' --data '{\"text\":\"Report is ready! Check it out: https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/merged.html\"}' https://hooks.slack.com/services/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"
   when: always
   only:
     - main
