@@ -49,7 +49,7 @@ pages:
   stage: pages
   script:
     # Generate the report using the merged JSON file as input.
-    - npx mochawesome-report-generator mochawesome-report\index.json
+    - npx mochawesome-report-generator mochawesome-report/index.json
     # move mochawesome-report folder to public
     - mv mochawesome-report public
     - report_link="https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/index.html"
