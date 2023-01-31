@@ -52,7 +52,7 @@ pages:
     - npx mochawesome-report-generator mochawesome-report\index.json
     # move mochawesome-report folder to public
     - mv mochawesome-report public
-    - report_link="https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/mochawesome.html"
+    - report_link="https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/index.html"
     - echo "${report_link}"
     - slack_message="Report is ready! Check it out:"
     - 'curl -X POST -H "Content-type: application/json" --data "{\"text\":\"${slack_message}${report_link}\"}" https://hooks.slack.com/services/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'
