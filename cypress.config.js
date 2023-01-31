@@ -14,18 +14,20 @@ async function setupNodeEvents(on, config) {
     })
   );
 
-  // // Adding the following lines to include the mochawesome reporter
-  // require('cypress-mochawesome-reporter/plugin')(on);
-  // config.reporter = "cypress-mochawesome-reporter";
-  // config.reporterOptions = {
-  //   jsonReport: "mochawesome-report.json",
-  //   reportDir: "mochawesome-report",
-  //   reportTitle: "Test Run Report",
-  //   reportPageTitle: "Custom Report Title",
-  //   charts: true,
-  //   inline: true,
-  //   theme: "dark"
-  // };
+  // Adding the following lines to include the mochawesome reporter
+  require('cypress-mochawesome-reporter/plugin')(on);
+  config.reporter = "cypress-mochawesome-reporter";
+  config.reporterOptions = {
+    jsonReport: "mochawesome-report.json",
+    reportDir: "mochawesome-report",
+    reportTitle: "Cypress Test Report",
+    reportPageTitle: "Lumina - Cypress Results",
+    saveHtml: false,
+    charts: true,
+    inline: true,
+    saveJson: true,
+    theme: "dark"
+  };
 
   return config;
 }

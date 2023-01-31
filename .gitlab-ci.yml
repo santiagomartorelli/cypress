@@ -36,7 +36,7 @@ test:
   stage: test
   script:
     # Run cypress tests
-    - npx cypress run --reporter mochawesome  --reporter-options reportDir=mochawesome-report,overwrite=false,html=false,json=true
+    - npx cypress run
   artifacts:
     expire_in: 30 days
     when: always
@@ -48,14 +48,10 @@ pages:
   image: cypress/browsers:node16.16.0-chrome107-ff107-edge
   stage: pages
   script:
-    # Merge Json files
-    - npx mochawesome-merge ./mochawesome-report/*.json > mochawesome.json
-    # Generate the report using the merged JSON files as input.
-    - npx mochawesome-report-generator mochawesome.json
+    # Generate the report using the merged JSON file as input.
+    - npx mochawesome-report-generator mochawesome-report\index.json
     # move mochawesome-report folder to public
     - mv mochawesome-report public
-    # move screenshots folder to public
-    - mv cypress/screenshots public
     - report_link="https://santiago105.gitlab.io/-/lumina-testing/-/jobs/$CI_JOB_ID/artifacts/public/mochawesome.html"
     - echo "${report_link}"
     - slack_message="Report is ready! Check it out:"
@@ -69,4 +65,3 @@ pages:
     paths:
       - public
       - mochawesome-report
-      - cypress/screenshots
