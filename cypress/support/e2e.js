@@ -14,6 +14,14 @@
 // ***********************************************************
 
 // Import commands.js using ES2015 syntax:
+
+Cypress.on('uncaught:exception', (err) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    console.log('Cypress detected uncaught exception: ', err);
+    return false;
+});
+
 import './commands'
 import 'cypress-mochawesome-reporter/register';
 

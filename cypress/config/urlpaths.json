@@ -2,6 +2,7 @@
   "paths": {
     "gs-hortisketch": "/hortisketch",
     "gs-suppliers": "/suppliers-list",
+    "gs-no-captcha": "/?nocaptcha=1",
     "gs-plant-information": "/plant-information",
     "gs-garden-manager": "/garden-manager/",
     "gs-community": "gardening-community",

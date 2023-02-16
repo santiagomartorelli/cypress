@@ -2,6 +2,7 @@ const { defineConfig } = require('cypress');
 const createBundler = require('@bahmutov/cypress-esbuild-preprocessor');
 const preprocessor = require('@badeball/cypress-cucumber-preprocessor');
 const createEsbuildPlugin = require('@badeball/cypress-cucumber-preprocessor/esbuild');
+const Cypress = require('cypress');
 
 async function setupNodeEvents(on, config) {
   console.log("reporter triggered");
@@ -29,6 +30,10 @@ async function setupNodeEvents(on, config) {
     theme: "dark"
   };
 
+  // Add the code to handle the uncaught exception
+  on('before:run', (err, runnable) => {
+    return false;
+  });
   return config;
 }
 

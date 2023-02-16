@@ -12,12 +12,18 @@ Given(/^I navigate to the "([^"]*)" page$/, function (path) {
   cy.visit(paths[path]);
 });
 
-Given(/^I navigate to the "(\/.*)" page of (flatrate\.com|gardensavvy\.com)$/, (path, url) => {
+Given(/^I navigate to the "(\/.*)" page of (flatrate\.com|gardensavvy\.com|staging\.gardensavvy\.com|canary\.gardensavvy\.com)$/, (path, url) => {
   switch (url) {
     case 'flatrate.com':
       cy.visit(`https://${url}/v16${path}`);
       break;
     case 'gardensavvy.com':
+      cy.visit(`https://${url}${path}`);
+      break;
+    case 'staging.gardensavvy.com':
+      cy.visit(`https://${url}${path}`);
+      break;
+    case 'canary.gardensavvy.com':
       cy.visit(`https://${url}${path}`);
       break;
     default:
