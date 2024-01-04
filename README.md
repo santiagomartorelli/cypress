@@ -8,15 +8,15 @@
 
 Integrated with:
 
-- [x] https://github.com/badeball/cypress-cucumber-preprocessor
-- [x] https://github.com/bahmutov/cypress-esbuild-preprocessor
-- [x] https://www.npmjs.com/package/mochawesome
+- [Cypress Cucumber Preprocessor](https://github.com/badeball/cypress-cucumber-preprocessor): A Cypress plugin that enables Gherkin-style feature files and step definitions for BDD testing.
+- [Cypress ESBuild Preprocessor](https://github.com/bahmutov/cypress-esbuild-preprocessor): A preprocessor for Cypress tests that uses ESBuild to speed up test execution.
+- [Mochawesome](https://www.npmjs.com/package/mochawesome): A reporter for Mocha test framework that generates attractive HTML reports.
+- [Esbuild](https://github.com/badeball/cypress-cucumber-preprocessor/tree/master/examples): Esbuild is a blazing fast JavaScript bundler and minifier, which can be leveraged to optimize your Cypress project's build process.
 
-(+ esbuild: https://github.com/badeball/cypress-cucumber-preprocessor/tree/master/examples)
 
 - ## 💻 Pre-requisites
 
-1. Node JS
+Make sure you have Node.js installed. You can download it [here](https://nodejs.org/).
 
 ## 🚀 Install the project
 
@@ -25,7 +25,12 @@ Install project dependencies with: npm i
 ## Run the tests:
 
 1. Standard Execution: npm run cypress:execution (Headless mode) - This will generate the Mochawesome report.
-2. npx cypress run --record --key 79a2f67d-4a82-41f1-9e71-18da72899e8b (to Run and save report in cypress cloud)
-3. 'npx cypress open' will open the test runner
+2. npx cypress run --record --key YOUR_CYPRESS_CLOUD_KEY (to Run and save report in cypress cloud)
+4. 'npx cypress open' will open the test runner
+
+📂 Folder Structure
+Place your feature files in the cypress/integration directory.
+Define your step definitions in the cypress/support/step_definitions directory.
+Store fixtures and other assets in the cypress/fixtures directory.
 
 
