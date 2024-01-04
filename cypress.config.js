@@ -38,8 +38,8 @@ module.exports = defineConfig({
   projectId: 'moa34p',
   e2e: {
     setupNodeEvents,
-    specPattern: 'cypress/e2e/features/**/*.feature',
-    baseUrl: 'https://www.gardensavvy.com',
+    specPattern: ['cypress/e2e/features/**/*.feature', 'cypress/integration/**/*.spec.js', 'cypress/integration/**/*.cy.js'],
+    // baseUrl: 'https://www.gardensavvy.com',
     chromeWebSecurity: false,
   },
 });

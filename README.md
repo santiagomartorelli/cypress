@@ -26,4 +26,6 @@ Install project dependencies with: npm i
 
 1. Standard Execution: npm run cypress:execution (Headless mode) - This will generate the Mochawesome report.
 2. npx cypress run --record --key 79a2f67d-4a82-41f1-9e71-18da72899e8b (to Run and save report in cypress cloud)
+3. 'npx cypress open' will open the test runner
+
 
