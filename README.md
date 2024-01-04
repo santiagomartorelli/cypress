@@ -28,9 +28,5 @@ Install project dependencies with: npm i
 2. npx cypress run --record --key YOUR_CYPRESS_CLOUD_KEY (to Run and save report in cypress cloud)
 4. 'npx cypress open' will open the test runner
 
-📂 Folder Structure
-Place your feature files in the cypress/integration directory.
-Define your step definitions in the cypress/support/step_definitions directory.
-Store fixtures and other assets in the cypress/fixtures directory.
 
 
